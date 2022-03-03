@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Veiculos.Models.Veiculo>
+
+@{
+    ViewData["Title"] = "Concessionária";
+}
+
+<p>
+    <a class="btn btn-outline-warning" asp-action="Create"> Adicionar Veiculo</a>
+</p>
+
+<table class="table table-info table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ano)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorVenda)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Cor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model)
+        {
+            <tr class="align-middle">
+                <td>
+                    @i.Name
+                </td>
+                
+                <td>
+                    @i.Ano
+                </td>
+                <td>
+                    @i.ValorVenda
+                </td>
+                <td>
+                    @i.Cor
+                </td>
+                <td>
+                    @{
+                        try
+                        {
+                            var base64 = Convert.ToBase64String(@i.Foto);
+                            if (!string.IsNullOrEmpty(base64))
+                            {
+                                var imgSrc = String.Format("data:image/png;base64, {0}", base64);
+                                <img class="img-fluid" src="@imgSrc" width="100" />
+                            }
+                        }
+                        catch
+                        {
+                            <img class="img-fluid" src="https://th.bing.com/th/id/R.4a934d0f089e34e4e5a2a354592ff4f0?rik=6Sws0rp3ccaSWw&pid=ImgRaw&r=0" width="70"/>
+                        }
+                    }
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-success btn-sm" asp-action="Edit" asp-route-id="Id">Editar</a>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="Id">Detalhes</a>
+                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="Id">Apagar</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
